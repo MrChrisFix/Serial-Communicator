@@ -98,9 +98,9 @@ namespace Serial_Communicator
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 235);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
+            this.label3.Size = new System.Drawing.Size(141, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Flow control";
+            this.label3.Text = "Flow control (handshake)";
             // 
             // comboBox_Flow
             // 

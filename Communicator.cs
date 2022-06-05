@@ -25,6 +25,7 @@ namespace Serial_Communicator
         {
             Options optionWindow = new Options(this._serialPort, this);
             optionWindow.Show();
+            //TODO: disable multiple options windows
         }
 
         public void saveOptions(SerialPort newOptions)

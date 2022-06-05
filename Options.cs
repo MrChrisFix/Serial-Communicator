@@ -29,39 +29,54 @@ namespace Serial_Communicator
         {
             this.comboBox_Port.SelectedIndex = this.comboBox_Port.Items.IndexOf(this.serialPort.PortName);
             this.textBox_Speed.Text = this.serialPort.BaudRate.ToString();
+            this.comboBox_Parity.SelectedIndex = Helper.ParityIdToInt(serialPort.Parity);
+            this.comboBox_Stop.SelectedIndex = Helper.StopIdToInt(serialPort.StopBits);
+            this.comboBox_Size.SelectedIndex = this.comboBox_Size.Items.IndexOf(serialPort.DataBits);
+            this.comboBox_Flow.SelectedIndex = Helper.HandIdToInt(serialPort.Handshake);
+            this.comboBox_Term.SelectedIndex = Helper.TermToInt(serialPort.NewLine);
+
+            if (Helper.TermToInt(serialPort.NewLine) == 4)
+            {
+                this.textBox_Term.Enabled = true;
+                this.textBox_Term.Text = Helper.convertTerminators(serialPort.NewLine);
+            }
+
         }
 
         private void InitSelectable()
         {
             this.updatePortList();
 
-            //Parity
+            //Parity -> type Parity
             foreach (Parity par in (Parity[])Enum.GetValues(typeof(Parity)))
             {
-                string name = convertParity(par);
-                if (name.Length > 0)
-                    this.comboBox_Parity.Items.Add(name);
+                this.comboBox_Parity.Items.Add(Helper.ParityIdToString(par));
             }
 
-            //DataField
+            //DataField -> type int
+            this.comboBox_Size.Items.Add(5);
+            this.comboBox_Size.Items.Add(6);
             this.comboBox_Size.Items.Add(7);
             this.comboBox_Size.Items.Add(8);
 
-            //Stop bits
-            this.comboBox_Stop.Items.Add("One");
-            this.comboBox_Stop.Items.Add("Two");
+            //Stop bits -> type StopBits
+            foreach(StopBits stop in (StopBits[])Enum.GetValues(typeof(StopBits)))
+            {
+                this.comboBox_Stop.Items.Add(Helper.StopIdToString(stop));
+            }
 
-            //Flow control
-            this.comboBox_Flow.Items.Add("None");
-            this.comboBox_Flow.Items.Add("RTS");
-            this.comboBox_Flow.Items.Add("XON/XOFF");
+            //Flow control -> type Handshake
+            foreach(Handshake hand in (Handshake[])Enum.GetValues(typeof(Handshake)))
+            {
+                this.comboBox_Flow.Items.Add(Helper.HandIdToString(hand));
+            }
 
-            //Terminator
-            this.comboBox_Term.Items.Add("None");
-            this.comboBox_Term.Items.Add("CR (/r)");
-            this.comboBox_Term.Items.Add("LF (/n)");
-            this.comboBox_Term.Items.Add("CRLF (/r/n)");
-            this.comboBox_Term.Items.Add("Own");
+            //Terminator -> type string
+            this.comboBox_Term.Items.Add("None");           //0
+            this.comboBox_Term.Items.Add("CR (/r)");        //1
+            this.comboBox_Term.Items.Add("LF (/n)");        //2
+            this.comboBox_Term.Items.Add("CRLF (/r/n)");    //3
+            this.comboBox_Term.Items.Add("Own");            //4
 
             //SerialPort.
             //DataBits -> data field size
