@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
@@ -109,22 +102,5 @@ namespace Serial_Communicator
         {
             this.updatePortList();
         }
-
-        private string convertParity(Parity par)
-        {
-            switch(par)
-            {
-                case Parity.None:
-                    return "None";
-                case Parity.Even:
-                    return "Even";
-                case Parity.Odd:
-                    return "Odd";
-                default:
-                    return "";
-
-            }
-        }
-
     }
 }
