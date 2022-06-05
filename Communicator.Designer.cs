@@ -34,21 +34,23 @@ namespace Serial_Communicator
             this.button_options = new System.Windows.Forms.Button();
             this.button_ping = new System.Windows.Forms.Button();
             this.button_send = new System.Windows.Forms.Button();
+            this.labelRecieve = new System.Windows.Forms.Label();
+            this.labelSend = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 37);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(361, 361);
+            this.richTextBox1.Size = new System.Drawing.Size(361, 336);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(427, 12);
+            this.richTextBox2.Location = new System.Drawing.Point(427, 37);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(361, 361);
+            this.richTextBox2.Size = new System.Drawing.Size(361, 336);
             this.richTextBox2.TabIndex = 1;
             this.richTextBox2.Text = "";
             // 
@@ -82,11 +84,33 @@ namespace Serial_Communicator
             this.button_send.UseVisualStyleBackColor = true;
             this.button_send.Click += new System.EventHandler(this.button_send_Click);
             // 
+            // labelRecieve
+            // 
+            this.labelRecieve.AutoSize = true;
+            this.labelRecieve.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelRecieve.Location = new System.Drawing.Point(427, 13);
+            this.labelRecieve.Name = "labelRecieve";
+            this.labelRecieve.Size = new System.Drawing.Size(63, 21);
+            this.labelRecieve.TabIndex = 5;
+            this.labelRecieve.Text = "Recieve";
+            // 
+            // labelSend
+            // 
+            this.labelSend.AutoSize = true;
+            this.labelSend.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelSend.Location = new System.Drawing.Point(12, 13);
+            this.labelSend.Name = "labelSend";
+            this.labelSend.Size = new System.Drawing.Size(45, 21);
+            this.labelSend.TabIndex = 6;
+            this.labelSend.Text = "Send";
+            // 
             // Communicator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelSend);
+            this.Controls.Add(this.labelRecieve);
             this.Controls.Add(this.button_send);
             this.Controls.Add(this.button_ping);
             this.Controls.Add(this.button_options);
@@ -95,6 +119,7 @@ namespace Serial_Communicator
             this.Name = "Communicator";
             this.Text = "Serial Communicator";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -105,6 +130,8 @@ namespace Serial_Communicator
         private System.Windows.Forms.Button button_options;
         private System.Windows.Forms.Button button_ping;
         private System.Windows.Forms.Button button_send;
+        private System.Windows.Forms.Label labelRecieve;
+        private System.Windows.Forms.Label labelSend;
     }
 }
 
