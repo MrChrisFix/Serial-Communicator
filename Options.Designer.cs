@@ -47,6 +47,7 @@ namespace Serial_Communicator
             this.comboBox_Stop = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox_Port
@@ -126,6 +127,7 @@ namespace Serial_Communicator
             this.comboBox_Term.Name = "comboBox_Term";
             this.comboBox_Term.Size = new System.Drawing.Size(121, 23);
             this.comboBox_Term.TabIndex = 7;
+            this.comboBox_Term.SelectedIndexChanged += new System.EventHandler(this.comboBox_Term_SelectedIndexChanged);
             // 
             // textBox_Term
             // 
@@ -162,9 +164,9 @@ namespace Serial_Communicator
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(172, 372);
+            this.buttonSave.Location = new System.Drawing.Point(108, 390);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(100, 40);
+            this.buttonSave.Size = new System.Drawing.Size(81, 27);
             this.buttonSave.TabIndex = 13;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -204,12 +206,23 @@ namespace Serial_Communicator
             this.label8.TabIndex = 19;
             this.label8.Text = "Stop bits";
             // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Location = new System.Drawing.Point(197, 390);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(81, 27);
+            this.buttonCancel.TabIndex = 20;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(290, 429);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.comboBox_Stop);
@@ -255,5 +268,6 @@ namespace Serial_Communicator
         private System.Windows.Forms.ComboBox comboBox_Stop;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }

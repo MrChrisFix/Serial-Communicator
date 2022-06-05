@@ -97,14 +97,13 @@ namespace Serial_Communicator
         #endregion
 
         #region Terminator
-        public static int TermStringToId(string listing)
+        public static string TermStringToTerm(string listing)
         {
-            if (listing == "None") return 0;
-            if (listing == "CR (/r)") return 1;
-            if (listing == "LF (/n)") return 2;
-            if (listing == "CRLF (/r/n)") return 3;
-            if (listing == "Own") return 4;
-            throw new Exception("Not listed");
+            if (listing == "None") return "";
+            if (listing == "CR (/r)") return "\r";
+            if (listing == "LF (/n)") return "\n";
+            if (listing == "CRLF (/r/n)") return "\r\n";
+            throw new Exception("Not listed or 'Own'");
         }
 
         public static int TermToInt(string listing)

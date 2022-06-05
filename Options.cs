@@ -93,6 +93,16 @@ namespace Serial_Communicator
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            serialPort.Handshake = Helper.HandStringToId(this.comboBox_Flow.SelectedItem.ToString());
+            serialPort.BaudRate = int.Parse(this.textBox_Speed.Text);
+            serialPort.DataBits = int.Parse(this.comboBox_Size.SelectedItem.ToString());
+            serialPort.StopBits = Helper.StopStringToId(this.comboBox_Stop.SelectedItem.ToString());
+            serialPort.Parity = Helper.ParityStringToId(this.comboBox_Parity.SelectedItem.ToString());
+            if (this.comboBox_Term.SelectedIndex == 4)
+                serialPort.NewLine = this.textBox_Term.Text;
+            else
+                serialPort.NewLine = Helper.TermStringToTerm(this.comboBox_Term.SelectedItem.ToString());
+
             parent.saveOptions(this.serialPort);
 
             this.Close();
@@ -101,6 +111,21 @@ namespace Serial_Communicator
         private void button_update_Click(object sender, EventArgs e)
         {
             this.updatePortList();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void comboBox_Term_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBox_Term.SelectedIndex == 4)
+            {
+                this.textBox_Term.Enabled = true;
+            }
+            else
+                this.textBox_Term.Enabled = false;
         }
     }
 }
