@@ -6,8 +6,8 @@ namespace Serial_Communicator
 {
     public partial class Options : Form
     {
-        Communicator parent;
-        SerialPort serialPort;
+        private readonly Communicator parent;
+        private SerialPort serialPort;
 
         public Options(SerialPort _serialPort, Communicator sender)
         {
@@ -126,6 +126,11 @@ namespace Serial_Communicator
             }
             else
                 this.textBox_Term.Enabled = false;
+        }
+
+        private void comboBox_Port_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.serialPort.PortName = this.comboBox_Port.Text;
         }
     }
 }

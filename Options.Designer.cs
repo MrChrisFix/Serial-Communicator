@@ -57,6 +57,7 @@ namespace Serial_Communicator
             this.comboBox_Port.Name = "comboBox_Port";
             this.comboBox_Port.Size = new System.Drawing.Size(121, 23);
             this.comboBox_Port.TabIndex = 0;
+            this.comboBox_Port.SelectedIndexChanged += new System.EventHandler(this.comboBox_Port_SelectedIndexChanged);
             // 
             // label1
             // 
