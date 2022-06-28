@@ -59,19 +59,20 @@ namespace Serial_Communicator
 
                 if (!this._serialPort.CDHolding && !this._serialPort.CtsHolding && !this._serialPort.DsrHolding)
                 {
-                    MessageBox.Show("Nie udało się połączyć", "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Coundn't connect to the device", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 
             }
             catch(Exception err)
             {
-                MessageBox.Show("Nie udało się połączyć.\nPowód:\n" + err.Message, "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Coundn't connect to the device.\nReason:\n" + err.Message, "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             this._serialPort.Close();
         }
 
         private void button_send_Click(object sender, EventArgs e)
         {
+            if (this.SendTextBox.Text.Length == 0) return;
             try
             {
                 this._serialPort.DiscardOutBuffer();
@@ -79,14 +80,14 @@ namespace Serial_Communicator
                 this._serialPort.WriteLine(this.SendTextBox.Text);
 
                 WriteMutex.WaitOne();
-                this.RecieveTextBox.Text += "(Send) " + this.SendTextBox.Text + '\n';
+                this.RecieveTextBox.Text += "(You): " + this.SendTextBox.Text + '\n';
 
                 WriteMutex.ReleaseMutex();
                 this.SendTextBox.Text = "";
             }
             catch(Exception err)
             {
-                MessageBox.Show("Nie udało się połączyć.\nPowód:\n" + err.Message, "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Coundn't connect to the device.\nReason:\n" + err.Message, "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -105,7 +106,7 @@ namespace Serial_Communicator
                     this.ReadCycle.Start();
                 }
                 else
-                    MessageBox.Show("Nie udało się połączyć.", "Błąd połączenia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Coundn't connect to the device", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {

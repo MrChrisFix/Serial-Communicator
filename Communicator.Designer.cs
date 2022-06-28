@@ -29,6 +29,7 @@ namespace Serial_Communicator
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Communicator));
             this.SendTextBox = new System.Windows.Forms.RichTextBox();
             this.RecieveTextBox = new System.Windows.Forms.RichTextBox();
             this.button_options = new System.Windows.Forms.Button();
@@ -174,6 +175,7 @@ namespace Serial_Communicator
             this.ClientSize = new System.Drawing.Size(800, 506);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Communicator";
             this.Text = "Serial Communicator";
             this.tableLayoutPanel1.ResumeLayout(false);

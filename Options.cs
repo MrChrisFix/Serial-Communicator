@@ -91,8 +91,22 @@ namespace Serial_Communicator
                 this.comboBox_Port.Items.Add(name);
         }
 
+        private bool IsGoodBaudrate()
+        {
+            int speed = int.Parse(this.textBox_Speed.Text);
+            if (speed >= 150 && speed <= 115000)
+                return true;
+            return false;
+        }
+
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            if(!IsGoodBaudrate())
+            {
+                MessageBox.Show("The speed of the baudrate speed must be between 150 and 115000 bit/s", "Baudrate error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             serialPort.Handshake = Helper.HandStringToId(this.comboBox_Flow.SelectedItem.ToString());
             serialPort.BaudRate = int.Parse(this.textBox_Speed.Text);
             serialPort.DataBits = int.Parse(this.comboBox_Size.SelectedItem.ToString());
