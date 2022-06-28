@@ -2,6 +2,7 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 using System.Threading;
+using System.Drawing;
 
 namespace Serial_Communicator
 {
@@ -9,34 +10,30 @@ namespace Serial_Communicator
     {
         private SerialPort _serialPort;
         private Thread ReadCycle;
-        private bool optionsOpen = false;
         private Options optionWindow;
+        private Mutex WriteMutex = new();
 
         public Communicator()
         {
             InitializeComponent();
             this._serialPort = new SerialPort();
         }
-        ~Communicator()
+
+        protected override void OnClosed(EventArgs e)
         {
-            if(this._serialPort.IsOpen)
+            if (this._serialPort.IsOpen)
             {
                 this._serialPort.Close();
                 if (ReadCycle.IsAlive)
                     ReadCycle.Join();
             }
+            base.OnClosed(e);
         }
 
         private void button_options_Click(object sender, EventArgs e)
         {
-            if(!optionsOpen)
-            {
-                this.optionWindow = new Options(this._serialPort, this);
-                //this.optionWindow.Show();
-                optionWindow.ShowDialog(this);
-                //this.optionsOpen = true;
-                //this.button_connect.Enabled = false;
-            }
+            this.optionWindow = new Options(this._serialPort, this);
+            optionWindow.ShowDialog(this);
         }
 
         public void saveOptions(SerialPort newOptions)
@@ -48,8 +45,6 @@ namespace Serial_Communicator
         public void closeOptions()
         {
             this.optionWindow.Close();
-            //this.optionsOpen = false;
-            //this.button_connect.Enabled = true;
         }
 
         private void button_ping_Click(object sender, EventArgs e)
@@ -82,7 +77,12 @@ namespace Serial_Communicator
                 this._serialPort.DiscardOutBuffer();
                 this._serialPort.DiscardInBuffer();
                 this._serialPort.WriteLine(this.SendTextBox.Text);
-                
+
+                WriteMutex.WaitOne();
+                this.RecieveTextBox.Text += "(Send) " + this.SendTextBox.Text + '\n';
+
+                WriteMutex.ReleaseMutex();
+                this.SendTextBox.Text = "";
             }
             catch(Exception err)
             {
@@ -125,7 +125,9 @@ namespace Serial_Communicator
                 try
                 {
                     string message = _serialPort.ReadLine();
+                    WriteMutex.WaitOne();
                     this.RecieveTextBox.Text += message + '\n';
+                    WriteMutex.ReleaseMutex();
                 }
                 catch(TimeoutException)
                 { /** Do nothing and wait longer */}
@@ -134,6 +136,12 @@ namespace Serial_Communicator
                     Console.WriteLine(err.Message);
                 }
             }
+        }
+
+        private void SendTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode.Equals(Keys.Enter))
+                e.SuppressKeyPress = true;
         }
     }
 }

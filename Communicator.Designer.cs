@@ -51,10 +51,11 @@ namespace Serial_Communicator
             this.SendTextBox.Size = new System.Drawing.Size(394, 475);
             this.SendTextBox.TabIndex = 0;
             this.SendTextBox.Text = "";
+            this.SendTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SendTextBox_KeyDown);
             // 
             // RecieveTextBox
             // 
-            this.RecieveTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RecieveTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RecieveTextBox.Location = new System.Drawing.Point(403, 28);
             this.RecieveTextBox.Name = "RecieveTextBox";
             this.RecieveTextBox.ReadOnly = true;
