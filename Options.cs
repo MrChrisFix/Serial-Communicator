@@ -7,7 +7,7 @@ namespace Serial_Communicator
     public partial class Options : Form
     {
         private readonly Communicator parent;
-        private SerialPort serialPort;
+        private readonly SerialPort serialPort;
 
         public Options(SerialPort _serialPort, Communicator sender)
         {
@@ -105,7 +105,7 @@ namespace Serial_Communicator
 
             parent.saveOptions(this.serialPort);
 
-            this.Close();
+            //Parent closes the window
         }
 
         private void button_update_Click(object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace Serial_Communicator
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.parent.closeOptions();
         }
 
         private void comboBox_Term_SelectedIndexChanged(object sender, EventArgs e)

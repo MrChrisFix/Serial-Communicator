@@ -9,6 +9,8 @@ namespace Serial_Communicator
     {
         private SerialPort _serialPort;
         private Thread ReadCycle;
+        private bool optionsOpen = false;
+        private Options optionWindow;
 
         public Communicator()
         {
@@ -27,14 +29,27 @@ namespace Serial_Communicator
 
         private void button_options_Click(object sender, EventArgs e)
         {
-            Options optionWindow = new Options(this._serialPort, this);
-            optionWindow.Show();
-            //TODO: disable multiple options windows
+            if(!optionsOpen)
+            {
+                this.optionWindow = new Options(this._serialPort, this);
+                //this.optionWindow.Show();
+                optionWindow.ShowDialog(this);
+                //this.optionsOpen = true;
+                //this.button_connect.Enabled = false;
+            }
         }
 
         public void saveOptions(SerialPort newOptions)
         {
             this._serialPort = newOptions;
+            this.closeOptions();
+        }
+
+        public void closeOptions()
+        {
+            this.optionWindow.Close();
+            //this.optionsOpen = false;
+            //this.button_connect.Enabled = true;
         }
 
         private void button_ping_Click(object sender, EventArgs e)
@@ -107,11 +122,10 @@ namespace Serial_Communicator
         {
             while(_serialPort.IsOpen)
             {
-                System.Diagnostics.Debug.WriteLine("E");
                 try
                 {
                     string message = _serialPort.ReadLine();
-                    this.RecieveTextBox.Text += '\n' + message;
+                    this.RecieveTextBox.Text += message + '\n';
                 }
                 catch(TimeoutException)
                 { /** Do nothing and wait longer */}

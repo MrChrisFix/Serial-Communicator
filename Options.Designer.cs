@@ -243,6 +243,7 @@ namespace Serial_Communicator
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox_Port);
             this.Name = "Options";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Options";
             this.ResumeLayout(false);
             this.PerformLayout();
