@@ -49,25 +49,16 @@ namespace Serial_Communicator
 
         private void button_ping_Click(object sender, EventArgs e)
         {
-            this._serialPort.Open();
-            //TODO: messageBox
             try
             {
                 this._serialPort.DiscardOutBuffer();
                 this._serialPort.DiscardInBuffer();
-                this._serialPort.Write("");
-
-                if (!this._serialPort.CDHolding && !this._serialPort.CtsHolding && !this._serialPort.DsrHolding)
-                {
-                    MessageBox.Show("Coundn't connect to the device", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                
+                this._serialPort.WriteLine("Ping");
             }
             catch(Exception err)
             {
                 MessageBox.Show("Coundn't connect to the device.\nReason:\n" + err.Message, "Connection error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            this._serialPort.Close();
         }
 
         private void button_send_Click(object sender, EventArgs e)
@@ -126,6 +117,18 @@ namespace Serial_Communicator
                 try
                 {
                     string message = _serialPort.ReadLine();
+                    if(message.Equals("Ping"))
+                    {
+                        this._serialPort.DiscardOutBuffer();
+                        this._serialPort.DiscardInBuffer();
+                        this._serialPort.WriteLine("Pong");
+                        continue;
+                    }
+                    else if (message.Equals("Pong"))
+                    {
+                        MessageBox.Show(this,"Successful ping!", "Pinging", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        continue;
+                    }
                     WriteMutex.WaitOne();
                     this.RecieveTextBox.Text += message + '\n';
                     WriteMutex.ReleaseMutex();
