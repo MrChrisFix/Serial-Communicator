@@ -3,6 +3,7 @@ using System.IO.Ports;
 using System.Windows.Forms;
 using System.Threading;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Serial_Communicator
 {
@@ -12,6 +13,7 @@ namespace Serial_Communicator
         private Thread ReadCycle;
         private Options optionWindow;
         private Mutex WriteMutex = new();
+        private Stopwatch time = new();
 
         public Communicator()
         {
@@ -54,6 +56,7 @@ namespace Serial_Communicator
                 this._serialPort.DiscardOutBuffer();
                 this._serialPort.DiscardInBuffer();
                 this._serialPort.WriteLine("Ping");
+                this.time.Start();
             }
             catch(Exception err)
             {
@@ -86,8 +89,16 @@ namespace Serial_Communicator
         {
             if(this.button_connect.Text == "Connect")
             {
-                _serialPort.Open();
-                if(_serialPort.IsOpen)
+                try
+                {
+                    _serialPort.Open();
+                }
+                catch
+                {
+                    MessageBox.Show("Coundn't connect to the device", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (_serialPort.IsOpen)
                 {
                     this.button_connect.Text = "Disconnect";
                     this.button_ping.Enabled = true;
@@ -126,7 +137,9 @@ namespace Serial_Communicator
                     }
                     else if (message.Equals("Pong"))
                     {
-                        MessageBox.Show(this,"Successful ping!", "Pinging", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        time.Stop();
+                        MessageBox.Show(this,"Successful ping!\nElapsed time: " + time.Elapsed.TotalMilliseconds.ToString() + "ms", "Pinging", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        time.Reset();
                         continue;
                     }
                     WriteMutex.WaitOne();
@@ -135,7 +148,7 @@ namespace Serial_Communicator
                 }
                 catch(TimeoutException)
                 { /** Do nothing and wait longer */}
-                catch(Exception err)
+                catch(OperationCanceledException err)
                 {
                     Console.WriteLine(err.Message);
                 }

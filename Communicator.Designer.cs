@@ -105,9 +105,9 @@ namespace Serial_Communicator
             this.labelRecieve.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelRecieve.Location = new System.Drawing.Point(403, 0);
             this.labelRecieve.Name = "labelRecieve";
-            this.labelRecieve.Size = new System.Drawing.Size(63, 21);
+            this.labelRecieve.Size = new System.Drawing.Size(133, 21);
             this.labelRecieve.TabIndex = 5;
-            this.labelRecieve.Text = "Recieve";
+            this.labelRecieve.Text = "Sent and recieved";
             // 
             // labelSend
             // 
